@@ -17,6 +17,21 @@ header {
     color:black;
 }
 
-.index-main {
+.main-index {
     margin:70px;
+}
+
+.main-new {
+    margin:70px;
+    text-align:center;
+}
+
+.main-edit {
+    margin:70px;
+    text-align:center;
+}
+
+.main-detail {
+    margin:70px;
+    text-align:center;
 }
