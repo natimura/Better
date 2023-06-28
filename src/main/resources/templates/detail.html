@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>詳細ページ</title>
+</head>
+<body>
+<div th:insert="common :: common"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<header>
+    <a th:href="@{/}">Better</a>
+    <h2>ログイン</h2>
+    <h2>ログアウト</h2>
+    <h2>新規登録</h2>
+</header>
+<a th:href="@{/new}">新規投稿</a>
+
+    <h3 th:text="${post.getTitle()}"></h3>
+    <p th:text="${post.getContent()}"></p>
+    <a th:href="@{/detail/{id}/edit(id=${post.getId()})}">編集</a>
+<form method="post">
+    <button type="submit" th:formaction="@{/detail/{id}/delete(id=${post.getId()})}">削除</button>
+</form>
+</body>
+</html>

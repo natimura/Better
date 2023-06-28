@@ -1,0 +1,22 @@
+header {
+    background-color: slategray;
+    width:100%;
+    height:250px;
+    display:flex;
+    justify-content:space-between;
+    padding:100px;
+}
+
+.header-right {
+    display:flex;
+    padding-top:50px;
+}
+
+.title-logo {
+    font-size:70px;
+    color:black;
+}
+
+.index-main {
+    margin:70px;
+}
