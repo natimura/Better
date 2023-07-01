@@ -11,11 +11,15 @@
     <a class="title-logo" th:href="@{/}">Better</a>
   </div>
   <div class="header-right">
-    <form action="/new" method="get">
-      <button class="btn btn-primary btn-lg" type="submit">新規投稿</button>
+    <form class="new-button" th:action="@{/new}" method="get">
+      <button class="btn btn-primary btn-lg" type="submit">投稿する</button>
     </form>
-    <a th:href="@{login}" class="h2 btn btn-primary btn-lg">ログイン</a>
-    <a th:href="@{signUp}" class="h2 btn btn-primary btn-lg">新規登録</a>
+    <form class="login-button" th:action="@{/login}" method="get">
+    <button class="btn btn-info btn-lg" type="submit">ログイン</button>
+    </form>
+    <form class="signup-button" th:action="@{/signUp}" method="get">
+    <button class="btn btn-light btn-lg" type="submit">新規登録</button>
+    </form>
   </div>
 </header>
 </body>

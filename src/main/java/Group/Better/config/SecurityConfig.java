@@ -1,16 +1,34 @@
-/**package Group.Better.config;
+package Group.Better.config;
 
-import org.springframework.context.annotation.Configuration;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@RequiredArgsConstructor
+public class SecurityConfig {
 
-    @Override
-    protected void configure(HttpSecurity security) throws Exception {
-        security.httpBasic().disable();
+    @Bean
+    protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/account/**").authenticated()
+                .anyRequest().permitAll()
+                .and()
+                .formLogin()
+                .loginProcessingUrl("/login")
+                .loginPage("/login");
+
+        return http.build();
     }
-}*/
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new Pbkdf2PasswordEncoder();
+    }
+
+}

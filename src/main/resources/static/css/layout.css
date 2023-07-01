@@ -32,6 +32,36 @@ header {
 }
 
 .main-detail {
-    margin:70px;
-    text-align:center;
+    margin-top:50px;
+    width:100vw;
+    height:calc(100vh-250px);
+}
+.detail-contents{
+    margin:0 auto;
+    width:70%;
+}
+.new-button,
+.login-button {
+    margin-right:20px;
+}
+
+.detail-title{
+    margin:0 auto;
+    width:70%;
+    border-bottom:1px solid gray;
+    padding-bottom:3px;
+    font-weight:bold;
+}
+.detail-content{
+    margin-top:10px;
+    width:70%;
+    font-size:30px;
+    height:500px;
+}
+.button-detail{
+    display:flex;
+    justify-content:center;
+}
+.edit-button{
+    margin-right:10px;
 }
