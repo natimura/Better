@@ -9,7 +9,7 @@ import java.util.List;
 public interface PostRepository {
 
     @Insert("insert into posts (title, content) values (#{title}, #{content})")
-    void insert(String title, String content);
+    void insert(@Param("title") String title, @Param("content") String content);
 
     @Select("select * from posts")
     List<PostEntity> findAll();
@@ -18,10 +18,10 @@ public interface PostRepository {
     PostEntity findById(long id);
 
     @Update("UPDATE posts SET title = #{title}, content = #{content} WHERE id = #{id}")
-    void update(long id, String title, String content);
+    void update(@Param("id") long id, @Param("title") String title, @Param("content") String content);
 
     @Delete("delete from posts where id = #{id}")
-    void deleteById(long id);
+    void deleteById(@Param("id")long id);
 
 
 }
