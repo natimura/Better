@@ -21,12 +21,7 @@ header {
     margin:70px;
 }
 
-.main-new {
-    margin:70px;
-    text-align:center;
-}
-
-.main-edit {
+.main-form {
     margin:70px;
     text-align:center;
 }
@@ -36,45 +31,60 @@ header {
     width:100vw;
     height:calc(100vh-250px);
 }
-.detail-contents{
+
+.detail-contents {
     margin:0 auto;
     width:70%;
 }
+
 .new-button,
 .login-button {
     margin-right:20px;
 }
 
-.detail-title{
+.detail-title {
     margin:0 auto;
     width:70%;
     border-bottom:1px solid gray;
     padding-bottom:3px;
     font-weight:bold;
 }
-.detail-content{
-    margin-top:10px;
+
+.detail-content {
+    padding-top:20px;
+    margin:0 auto;
     width:70%;
     font-size:30px;
     height:500px;
 }
-.button-detail{
+
+.detail-btns {
     display:flex;
     justify-content:center;
 }
-.edit-button{
+
+.delete-btn {
+    margin-left:60px;
+}
+
+.form-button {
     margin-right:10px;
 }
-.new-title {
+
+.form-title {
     width:50%;
     margin:0 auto;
     font-size:100%;
     padding-top:10px;
 }
 
-.new-content {
+.form-content {
     width:50%;
     margin:0 auto;
     font-size:100%;
     padding-top:10px;
+}
+
+.cancel-btn {
+    margin-top:20px;
 }

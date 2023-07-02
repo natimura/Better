@@ -13,17 +13,11 @@ public class IndexController {
     private final PostRepository postRepository;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model) {
         var postList = postRepository.findAll();
         model.addAttribute("postList", postList);
         return "index";
     }
-
-    @GetMapping("/login")
-    public String showLoginForm(){
-        return "login";
-    }
-
-
 }
+
 

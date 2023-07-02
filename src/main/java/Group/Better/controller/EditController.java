@@ -5,6 +5,8 @@ import Group.Better.repository.PostRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +27,12 @@ public class EditController {
     }
 
     @PostMapping("/detail/{id}/update")
-    public String updatePost(@PathVariable long id, PostForm postForm){
-        postRepository.update(id, postForm.getTitle(), postForm.getContent());
-        return "redirect:/";
+    public String updatePost(@PathVariable long id, @Validated PostForm form, BindingResult result, Model model){
+        if (result.hasErrors()) {
+            model.addAttribute("post", postRepository.findById(id));
+            return postEdit(id, model);
+        }
+        postRepository.update(id, form.getTitle(), form.getContent());
+        return "redirect:/detail/{id}";
     }
 }
