@@ -4,12 +4,12 @@ header {
     height:250px;
     display:flex;
     justify-content:space-between;
-    padding:100px;
+    padding:50px;
 }
 
-.header-right {
-    display:flex;
-    padding-top:50px;
+.header-left {
+    margin-top:50px;
+    margin-left:50px;
 }
 
 .title-logo {
@@ -87,4 +87,15 @@ header {
 
 .cancel-btn {
     margin-top:20px;
+}
+
+.header-right-user {
+    padding-left:50px;
+    font-size:70px;
+
+
+}
+.header-right-btn {
+    display:flex;
+    margin-right:100px;
 }

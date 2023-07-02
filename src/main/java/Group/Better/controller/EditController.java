@@ -21,16 +21,15 @@ public class EditController {
 
     @GetMapping("/detail/{id}/edit")
     public String postEdit(@PathVariable long id, Model model) {
-        var post = postRepository.findById(id);
-        model.addAttribute("post", post);
+        var form = postRepository.findById(id);
+        model.addAttribute("postForm", form);
         return "edit";
     }
 
     @PostMapping("/detail/{id}/update")
     public String updatePost(@PathVariable long id, @Validated PostForm form, BindingResult result, Model model){
         if (result.hasErrors()) {
-            model.addAttribute("post", postRepository.findById(id));
-            return postEdit(id, model);
+            return "edit";
         }
         postRepository.update(id, form.getTitle(), form.getContent());
         return "redirect:/detail/{id}";
