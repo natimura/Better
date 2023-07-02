@@ -65,3 +65,16 @@ header {
 .edit-button{
     margin-right:10px;
 }
+.new-title {
+    width:50%;
+    margin:0 auto;
+    font-size:100%;
+    padding-top:10px;
+}
+
+.new-content {
+    width:50%;
+    margin:0 auto;
+    font-size:100%;
+    padding-top:10px;
+}

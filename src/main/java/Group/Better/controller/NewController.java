@@ -3,6 +3,8 @@ package Group.Better.controller;
 import Group.Better.repository.PostRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +25,11 @@ public class NewController {
 
 
     @PostMapping("/posts")
-    public String createPost(PostForm postForm){
-        postRepository.insert(postForm.getTitle(), postForm.getContent());
+    public String createPost(@Validated  PostForm form, BindingResult result){
+        if (result.hasErrors()) {
+            return newPost(form);
+        }
+        postRepository.insert(form.getTitle(), form.getContent());
         return "redirect:/";
     }
 

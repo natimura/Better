@@ -11,14 +11,20 @@
   <div class="main-new">
     <h1>新規投稿</h1>
     <form th:action="@{/posts}" th:method="post" th:object="${postForm}">
-      <div class="form_title">
-        <input type="text" id="title" th:field="*{title}">
+      <div class="new-title">
+        <label for="title" class="form-label h2">タイトル</label>
+        <input type="text" id="title" class="form-control" th:field="*{title}"
+        th:classappend="${#fields.hasErrors('title')} ? is-invalid">
+        <p class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">(errors)</p>
       </div>
-      <div class="form_content">
-        <textarea id="content" th:field="*{content}"></textarea>
+      <div class="new-content">
+        <label for="content" class="form-label h2">内容</label>
+        <textarea rows="5" id="content" class="form-control" th:field="*{content}"
+        th:classappend="${#fields.hasErrors('content')} ? is-invalid"></textarea>
+        <p class="invalid-feedback" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">(errors)</p>
       </div>
-      <div class="form_submit">
-        <button type="submit">投稿</button>
+      <div class="new_submit">
+        <button class="mt-4 btn btn-primary btn-lg" type="submit">投稿</button>
       </div>
     </form>
   </div>

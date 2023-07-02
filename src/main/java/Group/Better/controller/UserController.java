@@ -22,13 +22,14 @@ public class UserController {
     }
 
     @PostMapping("/signUp")
-    public String signUp(@Validated UserForm form, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+    public String signUp(@Validated UserForm form, BindingResult result){
+        if (result.hasErrors()){
             return signUpCreation(form);
         }
         userService.signUp(form.getUsername(), form.getPassword());
-        return "redirect:/index";
+        return "redirect:/";
     }
 
 
 }
+
