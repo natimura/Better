@@ -16,6 +16,6 @@ public class PostForm {
     @NotBlank(message = "入力してください")
     private String content;
 
-    private UserId userId;
+    private long user_id;
 
 }

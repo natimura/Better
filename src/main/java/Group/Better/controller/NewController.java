@@ -23,11 +23,11 @@ public class NewController {
 
     @PostMapping("/posts")
     public String createPost(@Validated  PostForm form, BindingResult result
-        @PathVariable("userId") Integer userId){
+        @PathVariable("user_id") Integer userId){
         if (result.hasErrors()) {
             return newPost(form);
         }
-        postRepository.insert(form.getTitle(), form.getContent(), form.getUser_id());
+        postRepository.insert(form.getTitle(), form.getContent(), userId);
         return "redirect:/";
     }
 
