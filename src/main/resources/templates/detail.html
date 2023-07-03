@@ -20,7 +20,7 @@
                 <form class="detail-btn" th:action="@{/detail/{id}/edit(id=${post.getId()})}" method="get">
                     <button class="btn btn-secondary btn-lg" type="submit">編集</button>
                 </form>
-                <form class="delete-btn" th:action="@{/detail/{id}/delete(id=${post.getId()})}" nmethod="post">
+                <form class="delete-btn" th:action="@{/detail/{id}/delete(id=${post.getId()})}" method="post">
                     <button class="btn btn-outline-danger btn-lg" type="submit">削除</button>
                 </form>
             </div>

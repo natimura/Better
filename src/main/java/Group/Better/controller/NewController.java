@@ -5,11 +5,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import Group.Better.form.PostForm;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @AllArgsConstructor
@@ -25,11 +22,12 @@ public class NewController {
 
 
     @PostMapping("/posts")
-    public String createPost(@Validated  PostForm form, BindingResult result){
+    public String createPost(@Validated  PostForm form, BindingResult result
+        @PathVariable("userId") Integer userId){
         if (result.hasErrors()) {
             return newPost(form);
         }
-        postRepository.insert(form.getTitle(), form.getContent());
+        postRepository.insert(form.getTitle(), form.getContent(), form.getUser_id());
         return "redirect:/";
     }
 

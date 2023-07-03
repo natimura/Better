@@ -1,6 +1,6 @@
 package Group.Better.repository;
 
-import Group.Better.entity.PostEntity;
+import Group.Better.entity.Post;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -8,14 +8,14 @@ import java.util.List;
 @Mapper
 public interface PostRepository {
 
-    @Insert("insert into posts (title, content) values (#{title}, #{content})")
-    void insert(@Param("title") String title, @Param("content") String content);
+    @Insert("insert into posts (title, content, user_id) values (#{title}, #{content}, #{user_id})")
+    void insert(@Param("title") String title, @Param("content") String content, @Param("user_id") int user_id);
 
     @Select("select * from posts")
-    List<PostEntity> findAll();
+    List<Post> findAll();
 
     @Select("select * from posts where id = #{id}")
-    PostEntity findById(long id);
+    Post findById(long id);
 
     @Update("UPDATE posts SET title = #{title}, content = #{content} WHERE id = #{id}")
     void update(@Param("id") long id, @Param("title") String title, @Param("content") String content);
