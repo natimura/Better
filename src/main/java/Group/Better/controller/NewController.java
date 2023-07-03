@@ -21,8 +21,8 @@ public class NewController {
     }
 
 
-    @PostMapping("/posts")
-    public String createPost(@Validated  PostForm form, BindingResult result
+    @PostMapping("/posts/{user_id}")
+    public String createPost(@Validated  PostForm form, BindingResult result,
         @PathVariable("user_id") Integer userId){
         if (result.hasErrors()) {
             return newPost(form);
