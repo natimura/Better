@@ -13,7 +13,7 @@ public class Post {
     private long id;
     private String title;
     private  String content;
-    private  long user_id;
+    private  int user_id;
 
 
 }

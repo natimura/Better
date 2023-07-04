@@ -16,4 +16,5 @@ public interface UserRepository {
 
     @Select("select * from users where username = #{username}")
     Optional<User>findByUsername(String username);
+
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>新規投稿</title>
@@ -10,7 +10,7 @@
 
   <div class="main-form">
     <h1>新規投稿</h1>
-    <form th:action="@{/posts/{user_id}/(user_id=${userId})}" th:method="post" th:object="${postForm}">
+    <form th:action="@{/posts}" th:method="post" th:object="${postForm}" >
       <div class="form-title">
         <label for="title" class="form-label h2">タイトル</label>
         <input type="text" id="title" class="form-control" th:field="*{title}"
@@ -28,6 +28,9 @@
       </div>
     </form>
   </div>
-
+  <form th:action="@{/upload}" th:method="post" enctype="multipart/form-data">
+    <input type="file" name="image"/>
+    <button type="submit">送信</button>
+  </form>
 </body>
 </html>
