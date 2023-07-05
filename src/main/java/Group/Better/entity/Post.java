@@ -6,9 +6,13 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "posts")
 @AllArgsConstructor
 @Data
+
 public class Post {
     private long id;
     private String title;
