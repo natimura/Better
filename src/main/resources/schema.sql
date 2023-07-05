@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS posts (
     id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(256) NOT NULL,
     content VARCHAR(256) NOT NULL,
-    user_id BIGINT NOT NULL
+    user_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 

@@ -6,14 +6,10 @@ import java.util.Collection;
 
 public class CustomUserDetails extends User {
 
-    private final int id;
+    public CustomUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        super(username, password, authorities);
 
-    public CustomUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities, int id) {
-        super(username, password ,authorities);
-        this.id = id;
     }
 
-    public int getId() {
-        return id;
-    }
+
 }

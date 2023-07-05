@@ -3,6 +3,7 @@ package Group.Better.controller;
 import Group.Better.details.CustomUserDetails;
 import Group.Better.entity.User;
 import Group.Better.repository.PostRepository;
+import Group.Better.repository.UserRepository;
 import Group.Better.service.StorageService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import Group.Better.form.PostForm;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -24,6 +27,7 @@ import java.io.IOException;
 public class NewController {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     private StorageService storageService;
@@ -36,14 +40,19 @@ public class NewController {
 
     @PostMapping("/posts")
     public String createPost(@Validated  PostForm form, BindingResult result,
-        @AuthenticationPrincipal CustomUserDetails customUserDetails,
-        @RequestParam("image") MultipartFile file, Model model) throws IOException{
+
+        @RequestParam("image") MultipartFile file, Model model, HttpServletRequest httpServletRequest) throws IOException{
 
         if (result.hasErrors()) {
             model.addAttribute("postForm", form);
             return "new";
         }
-        postRepository.insert(form.getTitle(), form.getContent(), customUserDetails.getId());
+
+        String username = httpServletRequest.getRemoteUser();
+
+        long user_id = userRepository.findIdByUsername(username);
+
+        postRepository.insert(form.getTitle(), form.getContent(), user_id);
         storageService.uploadImage(file);
 
         return "redirect:/";

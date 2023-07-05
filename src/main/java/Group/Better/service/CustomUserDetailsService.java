@@ -24,8 +24,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                         user -> new CustomUserDetails(
                                 user.getUsername(),
                                 user.getPassword(),
-                                Collections.emptyList(),
-                                user.getId()
+                                Collections.emptyList()
+
                         )
                 )
                 .orElseThrow(
