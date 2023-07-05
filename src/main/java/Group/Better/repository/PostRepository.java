@@ -3,26 +3,25 @@ package Group.Better.repository;
 import Group.Better.entity.Post;
 import Group.Better.entity.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.Repository;
 
 import java.util.List;
 
-@Mapper
-public interface PostRepository {
+public interface PostRepository extends Repository<Post, Long> {
 
-    @Insert("insert into posts (title, content, user_id) values (#{title}, #{content}, #{user_id})")
+    @Query(value = "insert into posts (title, content, user_id) values (#{title}, #{content}, #{user_id})", nativeQuery = true)
     void insert(@Param("title") String title, @Param("content") String content, @Param("user_id") long user_id);
 
-    @Select("select * from posts")
+    @Query("select p from Post p")
     List<Post> findAll();
 
-    @Select("select * from posts where id = #{id}")
     Post findById(long id);
 
-    @Update("UPDATE posts SET title = #{title}, content = #{content} WHERE id = #{id}")
+    @Query(value = "UPDATE posts SET title = #{title}, content = #{content} WHERE id = #{id}", nativeQuery = true)
     void update(@Param("id") long id, @Param("title") String title, @Param("content") String content);
 
-    @Delete("delete from posts where id = #{id}")
+    @Query(value = "delete from posts where id = #{id}", nativeQuery = true)
     void deleteById(@Param("id")long id);
-
 
 }
