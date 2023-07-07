@@ -18,12 +18,16 @@
                 <p th:text="${post.content}"></p>
             </div>
             <div class="detail-btns">
-                <form class="detail-btn" th:action="@{/detail/{id}/edit(id=${post.id})}" method="get">
-                    <button class="btn btn-secondary btn-lg" type="submit">編集</button>
-                </form>
-                <form class="delete-btn" th:action="@{/detail/{id}/delete(id=${post.id})}" method="post">
-                    <button class="btn btn-outline-danger btn-lg" type="submit">削除</button>
-                </form>
+                <div th:if="${#authorization.expression('isAuthenticated()') and #authentication.principal.id == post.user.id}">
+                    <form class="detail-btn" th:action="@{/account/detail/{id}/edit(id=${post.id})}" method="get">
+                        <button class="btn btn-secondary btn-lg" type="submit">編集</button>
+                    </form>
+                </div>
+                <div th:if="${#authorization.expression('isAuthenticated()') and #authentication.principal.id == post.user.id}">
+                    <form class="delete-btn" th:action="@{/account/detail/{id}/delete(id=${post.id})}" method="post">
+                        <button class="btn btn-outline-danger btn-lg" type="submit">削除</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @Controller
 @AllArgsConstructor
-//@RequestMapping("/account")
+@RequestMapping("/account")
 public class NewController {
 
     private final PostService postService;

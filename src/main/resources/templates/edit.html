@@ -10,7 +10,7 @@
 
   <div class="main-form">
     <h1>編集</h1>
-    <form th:action="@{/detail/{id}/update(id=${id})}" th:method="post" th:object="${post}">
+    <form th:action="@{/account/detail/{id}/update(id=${id})}" th:method="post" th:object="${post}">
       <div class="form-title">
         <label for="title" class="form-label h3">タイトル</label>
         <input type="text" id="title" class="form-control" th:field="*{title}"
