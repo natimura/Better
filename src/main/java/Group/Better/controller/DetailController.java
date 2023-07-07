@@ -1,6 +1,6 @@
 package Group.Better.controller;
 
-import Group.Better.repository.PostRepository;
+import Group.Better.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +11,11 @@ import org.springframework.ui.Model;
 @AllArgsConstructor
 public class DetailController {
 
-    private final PostRepository postRepository;
+    private final PostService postService;
 
     @GetMapping("/detail/{id}")
-        public String postDetail(@PathVariable long id, Model model) {
-        var post = postRepository.findById(id);
+    public String detailPost(@PathVariable String id, Model model) {
+        var post = postService.getById(id);
         model.addAttribute("post", post);
         return "detail";
     }

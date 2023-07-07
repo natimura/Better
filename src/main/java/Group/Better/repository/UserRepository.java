@@ -15,9 +15,12 @@ public interface UserRepository {
     void insert(@Param("username") String username, @Param("password") String password);
 
     @Select("select * from users where username = #{username}")
-    Optional<User> findByUsername(String username);
+    Optional<User> findByUsernameLogin(String username);
 
     @Select("select id from users where username = #{username}")
     Long findIdByUsername(String username);
+
+    @Select("select * from users where username = #{username}")
+    User findByUsername(String username);
 
 }
