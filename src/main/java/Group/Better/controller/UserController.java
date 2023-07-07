@@ -1,8 +1,6 @@
 package Group.Better.controller;
 
-import Group.Better.details.CustomUserDetails;
 import Group.Better.entity.User;
-import Group.Better.form.UserForm;
 import Group.Better.service.CustomUserDetailsService;
 import Group.Better.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
 @RequiredArgsConstructor
 public class UserController {
@@ -27,19 +23,21 @@ public class UserController {
     private final CustomUserDetailsService customUserDetailsService;
 
     @GetMapping("/signUp")
-    public String signUpCreation(@ModelAttribute("userForm") UserForm Form){
+    public String signUpCreation(@ModelAttribute("user") User user){
         return "/signup";
     }
 
     @PostMapping("/signUp")
-    public String signUp(@Validated UserForm form, BindingResult result){
+    public String signUp(@Validated User user, BindingResult result){
         if (result.hasErrors()){
-            return signUpCreation(form);
+            return signUpCreation(user);
         }
-        userService.signUp(form.getUsername(), form.getPassword());
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(form.getUsername());
+        userService.signUp(user.getUsername(), user.getPassword());
+
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getUsername());
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         return "redirect:/";
     }
 

@@ -10,7 +10,7 @@
 
   <div class="main-form">
     <h1>新規投稿</h1>
-    <form th:action="@{/posts}" th:method="post" th:object="${postForm}" enctype="multipart/form-data" >
+    <form th:action="@{/posts}" th:method="post" th:object="${post}" enctype="multipart/form-data" >
       <div class="form-title">
         <label for="title" class="form-label h2">タイトル</label>
         <input type="text" id="title" class="form-control" th:field="*{title}"

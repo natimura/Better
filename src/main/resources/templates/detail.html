@@ -11,17 +11,17 @@
     <div class="main-detail">
         <div class="detail-contents">
             <div class="detail-title">
-                <h2 th:text="${post.getTitle()}"></h2>
+                <h2 th:text="${post.title}"></h2>
                 <h2 th:text="${post.user.username}"></h2>
             </div>
             <div class="detail-content">
-                <p th:text="${post.getContent()}"></p>
+                <p th:text="${post.content}"></p>
             </div>
             <div class="detail-btns">
-                <form class="detail-btn" th:action="@{/detail/{id}/edit(id=${post.getId()})}" method="get">
+                <form class="detail-btn" th:action="@{/detail/{id}/edit(id=${post.id})}" method="get">
                     <button class="btn btn-secondary btn-lg" type="submit">編集</button>
                 </form>
-                <form class="delete-btn" th:action="@{/detail/{id}/delete(id=${post.getId()})}" method="post">
+                <form class="delete-btn" th:action="@{/detail/{id}/delete(id=${post.id})}" method="post">
                     <button class="btn btn-outline-danger btn-lg" type="submit">削除</button>
                 </form>
             </div>
