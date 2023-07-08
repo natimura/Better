@@ -17,6 +17,14 @@ configurations {
 	}
 }
 
+apply plugin: 'io.spring.dependency-management'
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'Group.Better.BetterApplication'
+	}
+}
+
 repositories {
 	mavenCentral()
 }
@@ -37,12 +45,6 @@ dependencies {
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
 	testImplementation 'org.springframework.security:spring-security-test'
 	runtimeOnly 'org.postgresql:postgresql'
-}
-
-jar {
-	manifest {
-		attributes 'Main-Class': 'Group.Better.BetterApplication'
-	}
 }
 
 tasks.named('test') {
