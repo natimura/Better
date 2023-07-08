@@ -1,6 +1,7 @@
 FROM amazoncorretto:17 AS build
 COPY ./ /home/app
 RUN cd /home/app
+RUN ls -l
 RUN ./gradlew build
 
 FROM amazoncorretto:17-alpine
