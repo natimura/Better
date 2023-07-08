@@ -48,6 +48,8 @@ header {
     border-bottom:1px solid gray;
     padding-bottom:3px;
     font-weight:bold;
+    display:flex;
+    justify-content:space-between;
 }
 
 .detail-content {

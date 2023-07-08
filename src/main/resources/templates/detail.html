@@ -12,10 +12,13 @@
         <div class="detail-contents">
             <div class="detail-title">
                 <h2 th:text="${post.title}"></h2>
-                <h2 th:text="${post.user.username}"></h2>
+                <h3 th:text="${post.user.username}"></h3>
             </div>
             <div class="detail-content">
                 <p th:text="${post.content}"></p>
+            </div>
+            <div class="detail-image">
+                <img th:src="@{'data:image/jpeg;base64,' + ${base64ImageData}}" alt="Sample Image">
             </div>
             <div class="detail-btns">
                 <div th:if="${#authorization.expression('isAuthenticated()') and #authentication.principal.id == post.user.id}">

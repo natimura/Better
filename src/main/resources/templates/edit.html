@@ -18,7 +18,7 @@
         <p class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">(errors)</p>
       </div>
       <div class="form-content">
-        <label for="content" class="form-label h3">内容</label>
+        <label for="content" class="form-label h3">説明</label>
         <textarea rows="5" id="content" class="form-control" th:field="*{content}"
         th:classappend="${#fields.hasErrors('content')} ? is-invalid"></textarea>
         <p class="invalid-feedback" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">(errors)</p>

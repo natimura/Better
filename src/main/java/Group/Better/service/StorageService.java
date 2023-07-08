@@ -28,8 +28,8 @@ public class StorageService {
         }
         return null;
     }
-    public byte[]downloadImage(String fileName){
-        Optional<ImageData> dbImageData = storageRepository.findByName(fileName);
+    public byte[]downloadImage(long id){
+        Optional<ImageData> dbImageData = storageRepository.findById(id);
         byte[] images = ImageUtils.decompressImage(dbImageData.get().getImageData());
         return images;
     }
