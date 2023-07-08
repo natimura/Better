@@ -3,7 +3,9 @@ CREATE TABLE IF NOT EXISTS posts (
     title VARCHAR(256) NOT NULL,
     content VARCHAR(256) NOT NULL,
     user_id BIGINT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    image_data_id BIGINT,
+    FOREIGN KEY (image_data_id) REFERENCES image_data (id)
 );
 
 

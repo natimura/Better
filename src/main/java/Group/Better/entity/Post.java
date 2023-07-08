@@ -24,6 +24,11 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToOne
+    @JoinColumn(name = "image_data_id")
+    private ImageData imageData;
+
     public Post(){
     }
 }

@@ -1,7 +1,9 @@
 package Group.Better.controller;
 
+import Group.Better.entity.ImageData;
 import Group.Better.entity.Post;
 import Group.Better.entity.User;
+import Group.Better.repository.StorageRepository;
 import Group.Better.repository.UserRepository;
 import Group.Better.service.PostService;
 import Group.Better.service.StorageService;
@@ -23,6 +25,7 @@ public class NewController {
 
     private final PostService postService;
     private final UserRepository userRepository;
+    private final StorageRepository storageRepository;
 
     @Autowired
     private StorageService storageService;
@@ -44,8 +47,14 @@ public class NewController {
         String username = httpServletRequest.getRemoteUser();
         User user = userRepository.findByUsername(username);
         post.setUser(user);
+
+        Long imagedata = storageService.uploadImage(file);
+        if (imagedata != null) {
+            ImageData imageData = storageRepository.findById(imagedata).orElse(null);
+            post.setImageData(imageData);
+        }
+
         postService.save(post);
-        storageService.uploadImage(file);
 
         return "redirect:/";
     }

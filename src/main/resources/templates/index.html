@@ -15,9 +15,6 @@
                 <a class="h3" th:text="${post.title}" th:href="@{/detail/{id}(id=${post.id})}"></a>
             </li>
         </ul>
-        <body>
-        <img th:src="@{'data:image/jpeg;base64,' + ${base64ImageData}}" alt="Sample Image">
-        </body>
     </div>
 </body>
 </html>
