@@ -55,7 +55,6 @@ public class NewController {
         }
 
         postService.save(post);
-
         return "redirect:/";
     }
 }
