@@ -5,7 +5,6 @@ import Group.Better.repository.StorageRepository;
 import Group.Better.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -35,4 +34,10 @@ public class StorageService {
         return images;
     }
 
+    public void deleteImage(Long imageId) {
+        Optional<ImageData> imageData = storageRepository.findById(imageId);
+        if (imageData.isPresent()) {
+            storageRepository.delete(imageData.get());
+        }
+    }
 }

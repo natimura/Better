@@ -57,7 +57,7 @@ header {
     margin:0 auto;
     width:70%;
     font-size:30px;
-    height:500px;
+    height:200px;
 }
 
 .detail-btns {
@@ -94,10 +94,21 @@ header {
 .header-right-user {
     padding-left:50px;
     font-size:70px;
-
-
 }
+
 .header-right-btn {
     display:flex;
     margin-right:100px;
+}
+
+.form-image {
+    padding-top:20px;
+    width:50%;
+    margin:0 auto;
+}
+
+.detail-image {
+    margin:0 auto;
+    padding-top:20px;
+    text-align:center
 }

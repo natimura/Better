@@ -21,12 +21,15 @@ public class DetailController {
     public String detailPost(@PathVariable String id, Model model) {
         var post = postService.getById(id);
 
-        //byte[] imageData = storageService.downloadImage(2);
-        //String base64ImageData = Base64.getEncoder().encodeToString(imageData);
-        //model.addAttribute("base64ImageData", base64ImageData);
+        if (post.getImageData() != null) {
+            byte[] imageData = storageService.downloadImage(post.getImageData().getId());
+            String base64ImageData = Base64.getEncoder().encodeToString(imageData);
+            model.addAttribute("base64ImageData", base64ImageData);
+        }
 
         model.addAttribute("post", post);
         return "detail";
     }
+
 
 }

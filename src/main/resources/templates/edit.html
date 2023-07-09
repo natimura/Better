@@ -10,7 +10,7 @@
 
   <div class="main-form">
     <h1>編集</h1>
-    <form th:action="@{/account/detail/{id}/update(id=${id})}" th:method="post" th:object="${post}">
+    <form th:action="@{/account/detail/{id}/update(id=${id})}" th:method="post" th:object="${post}" enctype="multipart/form-data">
       <div class="form-title">
         <label for="title" class="form-label h3">タイトル</label>
         <input type="text" id="title" class="form-control" th:field="*{title}"
@@ -22,6 +22,9 @@
         <textarea rows="5" id="content" class="form-control" th:field="*{content}"
         th:classappend="${#fields.hasErrors('content')} ? is-invalid"></textarea>
         <p class="invalid-feedback" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">(errors)</p>
+      </div>
+      <div class="form-image">
+        <input class="form-control" type="file" name="image"/>
       </div>
       <div class="form-submit">
         <button class="mt-4 btn btn-primary btn-lg" type="submit">更新</button>
