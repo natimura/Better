@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS image_data (
     id SERIAL NOT NULL PRIMARY KEY,
     name VARCHAR(256) NOT NULL,
     type VARCHAR(256) NOT NULL,
-    imagedata LONGBLOB
+    imagedata BYTEA
 );
 
 CREATE TABLE IF NOT EXISTS posts (
