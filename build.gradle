@@ -17,6 +17,14 @@ configurations {
 	}
 }
 
+apply plugin: 'io.spring.dependency-management'
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'Group.Better.BetterApplication'
+	}
+}
+
 repositories {
 	mavenCentral()
 }
