@@ -11,20 +11,31 @@
   <div class="main-form">
     <h1>新規投稿</h1>
     <form th:action="@{/account/posts}" th:method="post" th:object="${post}" enctype="multipart/form-data" >
-      <div class="form-title">
-        <label for="title" class="form-label h2">タイトル</label>
-        <input type="text" id="title" class="form-control" th:field="*{title}"
-        th:classappend="${#fields.hasErrors('title')} ? is-invalid">
-        <p class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">(errors)</p>
+      <div class="form-posts">
+        <div class="form-title">
+          <label for="title" class="form-label h2">タイトル</label>
+          <input type="text" id="title" class="form-control" th:field="*{title}"
+          th:classappend="${#fields.hasErrors('title')} ? is-invalid">
+          <p class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">(errors)</p>
+        </div>
+        <div class="form-content">
+          <label for="content" class="form-label h2">説明</label>
+          <textarea rows="5" id="content" class="form-control" th:field="*{content}"
+          th:classappend="${#fields.hasErrors('content')} ? is-invalid"></textarea>
+          <p class="invalid-feedback" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">(errors)</p>
+        </div>
+        <div class="form-image">
+        <input class="form-control" type="file" name="image"/>
+        </div>
       </div>
-      <div class="form-content">
-        <label for="content" class="form-label h2">説明</label>
-        <textarea rows="5" id="content" class="form-control" th:field="*{content}"
-        th:classappend="${#fields.hasErrors('content')} ? is-invalid"></textarea>
-        <p class="invalid-feedback" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">(errors)</p>
-      </div>
-      <div class="form-image">
-      <input class="form-control" type="file" name="image"/>
+      <div class="form-choices">
+        <h2>チョイス</h2>
+        <div class="form-choice">
+          <label for="choice" class="form-label h3">1．</label>
+          <input type="text" id="choice" class="form-control"
+                 th:classappend="${#fields.hasErrors('choice')} ? is-invalid">
+          <p class="invalid-feedback" th:if="${#fields.hasErrors('choice')}" th:errors="*{choice}">(errors)</p>
+        </div>
       </div>
       <div class="form-submit">
         <button class="mt-4 btn btn-primary btn-lg" type="submit">投稿</button>

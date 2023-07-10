@@ -1,10 +1,12 @@
 package Group.Better.controller;
 
+import Group.Better.entity.Choice;
 import Group.Better.entity.ImageData;
 import Group.Better.entity.Post;
 import Group.Better.entity.User;
 import Group.Better.repository.StorageRepository;
 import Group.Better.repository.UserRepository;
+import Group.Better.service.ChoiceService;
 import Group.Better.service.PostService;
 import Group.Better.service.StorageService;
 import lombok.AllArgsConstructor;
@@ -26,6 +28,7 @@ public class NewController {
     private final PostService postService;
     private final UserRepository userRepository;
     private final StorageRepository storageRepository;
+    private final ChoiceService choiceService;
 
     @Autowired
     private StorageService storageService;
@@ -37,7 +40,10 @@ public class NewController {
 
     @PostMapping("/posts")
     public String postCreate(@Validated  Post post, BindingResult result,
-        @RequestParam("image") MultipartFile file, Model model, HttpServletRequest httpServletRequest) throws IOException{
+        @RequestParam("image") MultipartFile file,
+        @RequestParam("choice1") String choice1,
+        @RequestParam("choice2") String choice2,
+        Model model, HttpServletRequest httpServletRequest) throws IOException{
 
         if (result.hasErrors()) {
             model.addAttribute("post", post);
@@ -55,6 +61,15 @@ public class NewController {
         }
 
         postService.save(post);
+
+        Choice choiceEntity1 = new Choice();
+        choiceEntity1.setChoice(choice1);
+        choiceService.save(choiceEntity1);
+
+        Choice choiceEntity2 = new Choice();
+        choiceEntity2.setChoice(choice2);
+        choiceService.save(choiceEntity2);
+
         return "redirect:/";
     }
 }
