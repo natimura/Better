@@ -32,8 +32,8 @@
         <h2>チョイス</h2>
         <div class="form-choice">
           <label for="choice" class="form-label h3">1．</label>
-          <input type="text" id="choice" class="form-control"
-                 th:classappend="${#fields.hasErrors('choice')} ? is-invalid">
+          <input type="text" name="choice.value" id="choice" class="form-control" th:field="*{choice}"
+            th:classappend="${#fields.hasErrors('choice')} ? is-invalid">
           <p class="invalid-feedback" th:if="${#fields.hasErrors('choice')}" th:errors="*{choice}">(errors)</p>
         </div>
       </div>

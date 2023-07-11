@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -41,8 +42,7 @@ public class NewController {
     @PostMapping("/posts")
     public String postCreate(@Validated  Post post, BindingResult result,
         @RequestParam("image") MultipartFile file,
-        @RequestParam("choice1") String choice1,
-        @RequestParam("choice2") String choice2,
+        @ModelAttribute("choice") Choice choice,
         Model model, HttpServletRequest httpServletRequest) throws IOException{
 
         if (result.hasErrors()) {
@@ -62,13 +62,10 @@ public class NewController {
 
         postService.save(post);
 
-        Choice choiceEntity1 = new Choice();
-        choiceEntity1.setChoice(choice1);
-        choiceService.save(choiceEntity1);
+        choice.setPost(post);
+        Long choiceId = Long.valueOf(choice.getId());
+        choiceService.save(choice);
 
-        Choice choiceEntity2 = new Choice();
-        choiceEntity2.setChoice(choice2);
-        choiceService.save(choiceEntity2);
 
         return "redirect:/";
     }

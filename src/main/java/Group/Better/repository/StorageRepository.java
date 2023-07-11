@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface StorageRepository extends JpaRepository<ImageData,Long> {
 
     Optional<ImageData> findById(Long id);
+
 }

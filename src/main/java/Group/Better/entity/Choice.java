@@ -16,14 +16,12 @@ public class Choice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @NotBlank
+    @NotBlank(message = "入力してください")
     private String choice;
 
-
-
-
-
-
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 }
