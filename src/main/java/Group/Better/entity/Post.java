@@ -35,6 +35,6 @@ public class Post {
     private ImageData imageData;
 
     @NotEmpty(message = "入力してください")
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Choice> choice;
 }

@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS posts (
 
 CREATE TABLE IF NOT EXISTS choices (
     id SERIAL NOT NULL PRIMARY KEY,
-    choice VARCHAR(256) NOT NULL,
+    choice_content VARCHAR(256) NOT NULL,
     post_id BIGINT NOT NULL,
     FOREIGN KEY (post_id) REFERENCES posts (id)
 );

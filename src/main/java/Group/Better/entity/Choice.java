@@ -19,7 +19,7 @@ public class Choice {
     private Long id;
 
     @NotBlank(message = "入力してください")
-    private String choice;
+    private String choice_content;
 
     @ManyToOne
     @JoinColumn(name = "post_id")

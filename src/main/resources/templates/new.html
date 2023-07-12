@@ -31,10 +31,16 @@
       <div class="form-choices">
         <h2>チョイス</h2>
         <div class="form-choice">
-          <label for="choice" class="form-label h3">1．</label>
-          <input type="text" name="choice.value" id="choice" class="form-control" th:field="*{choice}"
-            th:classappend="${#fields.hasErrors('choice')} ? is-invalid">
-          <p class="invalid-feedback" th:if="${#fields.hasErrors('choice')}" th:errors="*{choice}">(errors)</p>
+          <label for="choice1" class="form-label h3">1．</label>
+          <input type="text" name="choice[0].choice_content" id="choice1" class="form-control" th:field="*{choice[0].choice_content}"
+                 th:classappend="${#fields.hasErrors('choice[0].choice_content')} ? is-invalid">
+          <p class="invalid-feedback" th:if="${#fields.hasErrors('choice[0].choice_content')}" th:errors="*{choice[0].choice_content}">(errors)</p>
+        </div>
+        <div class="form-choice">
+          <label for="choice2" class="form-label h3">2．</label>
+          <input type="text" name="choice[1].choice_content" id="choice2" class="form-control" th:field="*{choice[1].choice_content}"
+                 th:classappend="${#fields.hasErrors('choice[1].choice_content')} ? is-invalid">
+          <p class="invalid-feedback" th:if="${#fields.hasErrors('choice[1].choice_content')}" th:errors="*{choice[1].choice_content}">(errors)</p>
         </div>
       </div>
       <div class="form-submit">

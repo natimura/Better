@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -42,7 +43,7 @@ public class NewController {
     @PostMapping("/posts")
     public String postCreate(@Validated  Post post, BindingResult result,
         @RequestParam("image") MultipartFile file,
-        @ModelAttribute("choice") Choice choice,
+        @RequestParam("choice_content") List<String> choiceContents,
         Model model, HttpServletRequest httpServletRequest) throws IOException{
 
         if (result.hasErrors()) {
@@ -62,9 +63,13 @@ public class NewController {
 
         postService.save(post);
 
-        choice.setPost(post);
-        Long choiceId = Long.valueOf(choice.getId());
-        choiceService.save(choice);
+        for (String choiceContent : choiceContents) {
+            Choice choice = new Choice();
+            choice.setChoice_content(choiceContent);
+            choice.setPost(post);
+            choiceService.save(choice);
+        }
+
 
 
         return "redirect:/";
