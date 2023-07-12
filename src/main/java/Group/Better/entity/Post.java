@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -34,7 +32,4 @@ public class Post {
     @JoinColumn(name = "image_data_id")
     private ImageData imageData;
 
-    @NotEmpty(message = "入力してください")
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Choice> choice;
 }

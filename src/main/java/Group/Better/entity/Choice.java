@@ -19,9 +19,9 @@ public class Choice {
     private Long id;
 
     @NotBlank(message = "入力してください")
-    private String choice_content;
+    private String choiceContent;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post;
 }
