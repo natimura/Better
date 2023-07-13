@@ -4,6 +4,7 @@ import Group.Better.entity.Choice;
 import Group.Better.entity.ImageData;
 import Group.Better.entity.Post;
 import Group.Better.entity.User;
+import Group.Better.form.PostForm;
 import Group.Better.repository.StorageRepository;
 import Group.Better.repository.UserRepository;
 import Group.Better.service.ChoiceService;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -35,18 +37,19 @@ public class NewController {
     private StorageService storageService;
 
     @GetMapping("/new")
-    public String newPost(@ModelAttribute("post") Post post){
+    public String newPost(@ModelAttribute("postForm") PostForm postForm){
         return "/new";
     }
 
     @PostMapping("/posts")
-    public String postCreate(@Validated  Post post, BindingResult result,
-        @RequestParam("image") MultipartFile file,
-                             @RequestParam("choiceContent") String[] choiceContents,
-        Model model, HttpServletRequest httpServletRequest) throws IOException{
+    public String postCreate(@Validated PostForm postForm, BindingResult result,
+                             @RequestParam("image") MultipartFile file,
+                             Model model, HttpServletRequest httpServletRequest) throws IOException{
+
+        Post post = postForm.getPost();
 
         if (result.hasErrors()) {
-            model.addAttribute("post", post);
+            model.addAttribute("postForm", postForm);
             return "new";
         }
 
@@ -62,14 +65,12 @@ public class NewController {
 
         postService.save(post);
 
-        for (String choiceContent : choiceContents) {
-            Choice choice = new Choice();
-            choice.setChoiceContent(choiceContent);
+        List<Choice> choices = postForm.getChoices();
+
+        for (Choice choice : choices) {
             choice.setPost(post);
             choiceService.save(choice);
         }
-
-
 
         return "redirect:/";
     }
