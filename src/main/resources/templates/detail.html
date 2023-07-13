@@ -22,7 +22,11 @@
             </div>
             <div class="detail-choice">
                 <th:block th:each="choice : ${choices}">
-                    <h3 th:text="${choice}"></h3>
+                    <h3 th:text="${choice.choiceContent}"></h3>
+                    <p>Votes: <span th:text="${choice.count}"></span></p>
+                    <form th:action="@{/choice/{id}/vote(id=${choice.id})}" method="post">
+                        <button type="submit">Vote</button>
+                    </form>
                 </th:block>
             </div>
             <div class="detail-btns">

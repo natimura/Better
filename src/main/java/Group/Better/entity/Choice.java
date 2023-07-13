@@ -19,6 +19,8 @@ public class Choice {
 
     private String choiceContent;
 
+    private int count = 0;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post;

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Base64;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -30,12 +29,11 @@ public class DetailController {
             model.addAttribute("base64ImageData", base64ImageData);
         }
 
-        List<String> choices = post.getChoices().stream()
-                .map(Choice::getChoiceContent)
-                .collect(Collectors.toList());
+        List<Choice> choices = post.getChoices();
+        model.addAttribute("choices", choices);
 
         model.addAttribute("post", post);
-        model.addAttribute("choices", choices);
+
 
         return "detail";
     }
