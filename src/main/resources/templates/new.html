@@ -38,6 +38,18 @@
         <input type="text" id="choiceContent2" th:field="*{choices[1].choiceContent}" required>
         <span th:if="${#fields.hasErrors('choices[1].choiceContent')}" th:errors="*{choices[1].choiceContent}">Choice Error</span>
       </div>
+      <div class="form-choice">
+        <label for="choiceContent3">Choice 3</label>
+        <input type="text" id="choiceContent3" th:field="*{choices[2].choiceContent}">
+      </div>
+      <div class="form-choice">
+        <label for="choiceContent4">Choice 4</label>
+        <input type="text" id="choiceContent4" th:field="*{choices[3].choiceContent}">
+      </div>
+      <div class="form-choice">
+        <label for="choiceContent5">Choice 5</label>
+        <input type="text" id="choiceContent5" th:field="*{choices[4].choiceContent}">
+      </div>
       <div class="form-submit">
         <button class="mt-4 btn btn-primary btn-lg" type="submit">投稿</button>
       </div>

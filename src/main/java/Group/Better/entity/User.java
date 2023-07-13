@@ -1,6 +1,6 @@
 package Group.Better.entity;
 
-import Group.Better.validation.UniqueUsername;
+import Group.Better.validation.ValidUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class User {
     private Long id;
 
     @NotBlank
-    @UniqueUsername
+    @ValidUser
     private String username;
 
     @NotBlank

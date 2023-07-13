@@ -7,11 +7,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = UniqueUsernameValidator.class)
-public @interface UniqueUsername {
-    String message() default "入力されたユーザー名はすでに登録されています。別のユーザー名を入力してください";
+@Constraint(validatedBy = {ChoiceValidator.class})
+public @interface ValidChoice {
+
+    String message() default "Invalid choice entries";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
+

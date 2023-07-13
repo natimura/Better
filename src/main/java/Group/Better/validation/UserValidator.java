@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 @RequiredArgsConstructor
-public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, String> {
+public class UserValidator implements ConstraintValidator<ValidUser, String> {
 
     private final UserRepository userRepository;
 

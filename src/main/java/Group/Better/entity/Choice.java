@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +17,6 @@ public class Choice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    @NotBlank(message = "入力してください")
     private String choiceContent;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
