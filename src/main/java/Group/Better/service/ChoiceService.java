@@ -25,7 +25,7 @@ public class ChoiceService {
     public String vote(String choiceId) {
         Choice choice = choiceRepository.findById(choiceId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid choice Id:" + choiceId));
-        choice.setCount(choice.getCount() + 1);
+        choice.setVoteCount(choice.getVoteCount() + 1);
         choiceRepository.save(choice);
         return choice.getPost().getId();
     }

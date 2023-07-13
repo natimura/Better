@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS image_data (
     id SERIAL NOT NULL PRIMARY KEY,
     name VARCHAR(256) NOT NULL,
     type VARCHAR(256) NOT NULL,
-   imagedata BYTEA
+    imagedata BYTEA
 );
 
 CREATE TABLE IF NOT EXISTS posts (
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS posts (
 CREATE TABLE IF NOT EXISTS choices (
     id SERIAL NOT NULL PRIMARY KEY,
     choice_content VARCHAR(256) NOT NULL,
-　　 count BIGINT,
+　　 vote_count BIGINT,
     post_id BIGINT NOT NULL,
     FOREIGN KEY (post_id) REFERENCES posts (id)
 );
