@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -16,7 +17,7 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @NotBlank(message = "入力してください")
     private String title;
@@ -32,4 +33,6 @@ public class Post {
     @JoinColumn(name = "image_data_id")
     private ImageData imageData;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Choice> choices;
 }

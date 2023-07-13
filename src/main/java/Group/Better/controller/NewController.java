@@ -42,7 +42,8 @@ public class NewController {
     }
 
     @PostMapping("/posts")
-    public String postCreate(@Validated PostForm postForm, BindingResult result,
+    public String postCreate(@ModelAttribute("postForm")
+                             @Validated PostForm postForm, BindingResult result,
                              @RequestParam("image") MultipartFile file,
                              Model model, HttpServletRequest httpServletRequest) throws IOException{
 

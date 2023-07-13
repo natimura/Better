@@ -18,7 +18,12 @@
                 <p th:text="${post.content}"></p>
             </div>
             <div class="detail-image">
-                <img th:src="@{'data:image/jpeg;base64,' + ${base64ImageData}}" alt="Sample Image">
+                <img th:if="${base64ImageData != null && !base64ImageData.isEmpty()}" th:src="@{'data:image/jpeg;base64,' + ${base64ImageData}}">
+            </div>
+            <div class="detail-choice">
+                <th:block th:each="choice : ${choices}">
+                    <h3 th:text="${choice}"></h3>
+                </th:block>
             </div>
             <div class="detail-btns">
                 <div th:if="${#authorization.expression('isAuthenticated()') and #authentication.principal.id == post.user.id}">
