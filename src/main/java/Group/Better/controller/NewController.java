@@ -69,8 +69,10 @@ public class NewController {
         List<Choice> choices = postForm.getChoices();
 
         for (Choice choice : choices) {
-            choice.setPost(post);
-            choiceService.save(choice);
+            if (choice.getChoiceContent() != null && !choice.getChoiceContent().isEmpty()) {
+                choice.setPost(post);
+                choiceService.save(choice);
+            }
         }
 
         return "redirect:/";
