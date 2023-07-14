@@ -7,6 +7,8 @@ import Group.Better.repository.StorageRepository;
 import Group.Better.service.PostService;
 import Group.Better.service.StorageService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +30,15 @@ public class EditController {
     @GetMapping("/detail/{id}/edit")
     public String editPost(@PathVariable String id, Model model) {
         var post = postService.getById(id);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = auth.getName();
+
+        if (!post.getUser().getUsername().equals(currentUserName)) {
+            // If not, redirect to the home page
+            return "redirect:/";
+        }
+
         model.addAttribute("post", post);
         return "edit";
     }
