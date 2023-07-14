@@ -38,7 +38,7 @@ public class NewController {
 
     @GetMapping("/new")
     public String newPost(@ModelAttribute("postForm") PostForm postForm){
-        return "/new";
+        return "new";
     }
 
     @PostMapping("/posts")
