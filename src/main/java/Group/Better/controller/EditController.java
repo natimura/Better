@@ -35,7 +35,6 @@ public class EditController {
         String currentUserName = auth.getName();
 
         if (!post.getUser().getUsername().equals(currentUserName)) {
-            // If not, redirect to the home page
             return "redirect:/";
         }
 
