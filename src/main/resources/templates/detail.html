@@ -20,14 +20,14 @@
             <div class="detail-image">
                 <img th:if="${base64ImageData != null && !base64ImageData.isEmpty()}" th:src="@{'data:image/jpeg;base64,' + ${base64ImageData}}">
             </div>
-            <div class="detail-choice">
-                <th:block th:each="choice : ${choices}">
-                    <h3 th:text="${choice.choiceContent}"></h3>
-                    <p>Votes: <span th:text="${choice.voteCount}"></span></p>
+            <div class="detail-choices">
+                <div class="detail-choice" th:each="choice : ${choices}">
+                    <h3 th:text="${choice.choiceContent}" th:if="${choice.choiceContent} != null and ${choice.choiceContent} != ''"></h3>
+                    <p th:if="${choice.choiceContent} != null and ${choice.choiceContent} != ''">投票数 <span class="h2" th:text="${choice.voteCount}" th:if="${choice.choiceContent} != null and ${choice.choiceContent} != ''"></span></p>
                     <form th:action="@{/choice/{id}/vote(id=${choice.id})}" method="post">
-                        <button type="submit">Vote</button>
+                        <button type="submit" class="btn btn-info btn-lg" th:if="${choice.choiceContent} != null and ${choice.choiceContent} != ''">投票する</button>
                     </form>
-                </th:block>
+                </div>
             </div>
             <div class="detail-btns">
                 <div th:if="${#authorization.expression('isAuthenticated()') and #authentication.principal.id == post.user.id}">
