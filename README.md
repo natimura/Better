@@ -9,12 +9,10 @@ ___
 
 ### URL
 ___
-
+https://better-ux9a.onrender.com
 
 ### テスト用アカウント
 ___
-* Basic認証パスワード：  
-* Basic認証ID：
 * ユーザー名：テスト
 * パスワード：123456789aaa
 
