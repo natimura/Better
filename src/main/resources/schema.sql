@@ -25,6 +25,6 @@ CREATE TABLE IF NOT EXISTS choices (
     id SERIAL NOT NULL PRIMARY KEY,
     choice_content VARCHAR(256) NOT NULL,
     vote_count BIGINT,
-    post_id BIGINT NOT NULL,
+    post_id VARCHAR(256) NOT NULL,
     FOREIGN KEY (post_id) REFERENCES posts (id)
 );
