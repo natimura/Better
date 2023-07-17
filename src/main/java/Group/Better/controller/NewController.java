@@ -67,13 +67,16 @@ public class NewController {
         }
 
         postService.save(post);
+        log.info("postのID : " + post.getId());
 
         List<Choice> choices = postForm.getChoices();
+        log.info("postのID : " + post.getId());
 
         for (Choice choice : choices) {
             if (choice.getChoiceContent() != null && !choice.getChoiceContent().isEmpty()) {
                 log.info("postのID : " + post.getId());
                 choice.setPost(post);
+                log.info("postのID : " + post.getId());
                 choiceService.save(choice);
             }
         }
