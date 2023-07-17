@@ -17,16 +17,20 @@ public class ChoiceService {
        choiceRepository.save(choice);
     }
 
-    public Choice getById(@PathVariable("id") String id) {
+    public Choice getById(@PathVariable("id") Long id) {
         return choiceRepository.findById(id).orElseThrow();
     }
 
     @Transactional
-    public Long vote(String choiceId) {
+    public Long vote(Long choiceId) {
         Choice choice = choiceRepository.findById(choiceId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid choice Id:" + choiceId));
         choice.setVoteCount(choice.getVoteCount() + 1);
         choiceRepository.save(choice);
         return choice.getPost().getId();
+    }
+
+    public void delete(Choice choice){
+        choiceRepository.delete(choice);
     }
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -53,7 +54,7 @@ public class EditController {
 
     @PostMapping("/detail/{id}/update")
     public String postUpdate(@PathVariable Long id, @Validated PostForm postForm, BindingResult result, Model model,
-        @RequestParam("image") MultipartFile file) throws IOException {
+                             @RequestParam("image") MultipartFile file) throws IOException {
 
         if (result.hasErrors()) {
             model.addAttribute("postForm", postForm);
@@ -67,15 +68,41 @@ public class EditController {
         List<Choice> updatedChoices = postForm.getChoices();
         List<Choice> existingChoices = post.getChoices();
 
+        List<Choice> choicesToDelete = new ArrayList<>();
+
+        boolean isChoiceEdited = false;
         int minSize = Math.min(existingChoices.size(), updatedChoices.size());
         for (int i = 0; i < minSize; i++) {
-            existingChoices.get(i).setChoiceContent(updatedChoices.get(i).getChoiceContent());
+            if (!updatedChoices.get(i).getChoiceContent().trim().isEmpty() &&
+                    !existingChoices.get(i).getChoiceContent().equals(updatedChoices.get(i).getChoiceContent())) {
+                isChoiceEdited = true;
+                existingChoices.get(i).setChoiceContent(updatedChoices.get(i).getChoiceContent());
+            }
+            if (updatedChoices.get(i).getChoiceContent().trim().isEmpty()) {
+                choicesToDelete.add(existingChoices.get(i));
+                existingChoices.remove(i);
+                updatedChoices.remove(i);
+                i--;
+                minSize--;
+            }
+        }
+
+        if (updatedChoices.size() > existingChoices.size()) {
+            isChoiceEdited = true;
+        }
+
+        if (isChoiceEdited) {
+            for (Choice choice : existingChoices) {
+                choice.setVoteCount(0);
+            }
         }
 
         for (int i = minSize; i < updatedChoices.size(); i++) {
             Choice newChoice = updatedChoices.get(i);
-            newChoice.setPost(post);
-            choiceService.save(newChoice);
+            if (!newChoice.getChoiceContent().trim().isEmpty()) {
+                newChoice.setPost(post);
+                choiceService.save(newChoice);
+            }
         }
 
         User user = post.getUser();
@@ -87,13 +114,16 @@ public class EditController {
                 ImageData imageData = storageRepository.findById(imagedata).orElse(null);
                 post.setImageData(imageData);
             }
-        }
-        else {
+        } else {
             post.setImageData((post.getImageData()));
         }
 
         postService.save(post);
+
+        for (Choice choice : choicesToDelete) {
+            choiceService.delete(choice);
+        }
+
         return "redirect:/detail/{id}";
     }
-
 }
