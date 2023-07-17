@@ -35,4 +35,6 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Choice> choices;
+
+    private boolean closedVote = false;
 }

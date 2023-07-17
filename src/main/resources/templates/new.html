@@ -10,7 +10,7 @@
 
   <div class="main-form">
     <h1>新規投稿</h1>
-    <form th:action="@{/account/posts}" th:method="post" th:object="${postForm}" enctype="multipart/form-data" >
+    <form th:action="@{/account/create}" th:method="post" th:object="${postForm}" enctype="multipart/form-data" >
       <div class="form-posts">
         <div class="form-title">
           <label for="title">タイトル</label>

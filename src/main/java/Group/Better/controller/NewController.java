@@ -43,7 +43,7 @@ public class NewController {
         return "new";
     }
 
-    @PostMapping("/posts")
+    @PostMapping("/create")
     public String postCreate(@ModelAttribute("postForm")
                              @Validated PostForm postForm, BindingResult result,
                              @RequestParam("image") MultipartFile file,
