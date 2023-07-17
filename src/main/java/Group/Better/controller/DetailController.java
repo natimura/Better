@@ -1,6 +1,7 @@
 package Group.Better.controller;
 
 import Group.Better.entity.Choice;
+import Group.Better.entity.Post;
 import Group.Better.service.PostService;
 import Group.Better.service.StorageService;
 import lombok.AllArgsConstructor;
@@ -20,8 +21,8 @@ public class DetailController {
     private final StorageService storageService;
 
     @GetMapping("/detail/{id}")
-    public String detailPost(@PathVariable String id, Model model) {
-        var post = postService.getById(id);
+    public String detailPost(@PathVariable Long id, Model model) {
+        Post post = postService.getById(id);
 
         if (post.getImageData() != null) {
             byte[] imageData = storageService.downloadImage(post.getImageData().getId());

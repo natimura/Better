@@ -10,21 +10,45 @@
 
   <div class="main-form">
     <h1>編集</h1>
-    <form th:action="@{/account/detail/{id}/update(id=${id})}" th:method="post" th:object="${post}" enctype="multipart/form-data">
+    <form th:action="@{/account/detail/{id}/update(id=${id})}" th:method="post" th:object="${postForm}" enctype="multipart/form-data">
       <div class="form-title">
-        <label for="title" class="form-label h3">タイトル</label>
-        <input type="text" id="title" class="form-control" th:field="*{title}"
-        th:classappend="${#fields.hasErrors('title')} ? is-invalid">
-        <p class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">(errors)</p>
+        <label for="title">タイトル</label>
+        <input type="text" id="title" class="form-control" th:field="*{post.title}"
+        th:classappend="${#fields.hasErrors('post.title')} ? is-invalid">
+        <p class="invalid-feedback" th:if="${#fields.hasErrors('post.title')}" th:errors="*{post.title}">(errors)</p>
       </div>
       <div class="form-content">
-        <label for="content" class="form-label h3">説明</label>
-        <textarea rows="5" id="content" class="form-control" th:field="*{content}"
-        th:classappend="${#fields.hasErrors('content')} ? is-invalid"></textarea>
-        <p class="invalid-feedback" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">(errors)</p>
+        <label for="content">説明</label>
+        <textarea rows="5" id="content" class="form-control" th:field="*{post.content}"
+        th:classappend="${#fields.hasErrors('post.content')} ? is-invalid"></textarea>
+        <p class="invalid-feedback" th:if="${#fields.hasErrors('post.content')}" th:errors="*{post.content}">(errors)</p>
       </div>
       <div class="form-image">
         <input class="form-control" type="file" name="image"/>
+      </div>
+      <div class="form-choices">
+        <div class="form-choice">
+          <label for="choiceContent1">チョイス.1</label><br>
+          <input type="text" id="choiceContent1" th:field="*{choices[0].choiceContent}" required>
+          <span th:if="${#fields.hasErrors('choices[0].choiceContent')}" th:errors="*{choices[0].choiceContent}">Choice Error</span>
+        </div>
+        <div class="form-choice">
+          <label for="choiceContent2">チョイス.2</label><br>
+          <input type="text" id="choiceContent2" th:field="*{choices[1].choiceContent}" required>
+          <span th:if="${#fields.hasErrors('choices[1].choiceContent')}" th:errors="*{choices[1].choiceContent}">Choice Error</span>
+        </div>
+        <div class="form-choice">
+          <label for="choiceContent3">チョイス.3</label><br>
+          <input type="text" id="choiceContent3" th:field="*{choices[2].choiceContent}">
+        </div>
+        <div class="form-choice">
+          <label for="choiceContent4">チョイス.4</label><br>
+          <input type="text" id="choiceContent4" th:field="*{choices[3].choiceContent}">
+        </div>
+        <div class="form-choice">
+          <label for="choiceContent5">チョイス.5</label><br>
+          <input type="text" id="choiceContent5" th:field="*{choices[4].choiceContent}">
+        </div>
       </div>
       <div class="form-submit">
         <button class="mt-4 btn btn-primary btn-lg" type="submit">更新</button>

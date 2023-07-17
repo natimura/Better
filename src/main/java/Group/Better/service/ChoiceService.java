@@ -22,7 +22,7 @@ public class ChoiceService {
     }
 
     @Transactional
-    public String vote(String choiceId) {
+    public Long vote(String choiceId) {
         Choice choice = choiceRepository.findById(choiceId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid choice Id:" + choiceId));
         choice.setVoteCount(choice.getVoteCount() + 1);

@@ -76,7 +76,7 @@ public class NewController {
             if (choice.getChoiceContent() != null && !choice.getChoiceContent().isEmpty()) {
                 log.info("postのID : " + post.getId());
                 choice.setPost(post);
-                log.info("postのID : " + post.getId());
+                log.info("postのID : " + choice.getPost().getId());
                 choiceService.save(choice);
             }
         }

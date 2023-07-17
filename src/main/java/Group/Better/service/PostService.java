@@ -17,18 +17,15 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public Post getById(@PathVariable("id") String id){
+    public Post getById(Long id) {
         return postRepository.findById(id).orElseThrow();
     }
 
     public void save(Post post){
-
         postRepository.save(post);
     }
 
-    public void delete(@PathVariable("id") String id){
+    public void delete(@PathVariable("id") Long id){
         postRepository.deleteById(id);
     }
 }
-
-

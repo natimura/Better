@@ -15,7 +15,7 @@ public class DeleteController {
     private final PostService postService;
 
     @PostMapping("detail/{id}/delete")
-    public String postDelete(@PathVariable String id){
+    public String postDelete(@PathVariable Long id){
         postService.delete(id);
         return "redirect:/";
     }

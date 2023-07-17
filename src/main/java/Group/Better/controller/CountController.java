@@ -14,7 +14,7 @@ public class CountController {
 
     @PostMapping("/choice/{choiceId}/vote")
     public String vote(@PathVariable String choiceId) {
-        String postId = choiceService.vote(choiceId);
+        Long postId = choiceService.vote(choiceId);
         return "redirect:/detail/" + postId;
     }
 }

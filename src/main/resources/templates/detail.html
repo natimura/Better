@@ -24,7 +24,9 @@
                 <div class="detail-choice" th:each="choice : ${choices}">
                     <h3 th:text="${choice.choiceContent}"></h3>
                     <p>投票数 <span class="h2" th:text="${choice.voteCount}" ></span></p>
-                    <form th:action="@{/choice/{id}/vote(id=${choice.id})}" method="post">
+                    <form th:if="${#authorization.expression('isAuthenticated()')
+                          and #authentication.principal.id != post.user.id}"
+                          th:action="@{/choice/{id}/vote(id=${choice.id})}" method="post">
                         <button type="submit" class="btn btn-info btn-lg">投票する</button>
                     </form>
                 </div>
