@@ -11,6 +11,7 @@ import Group.Better.service.ChoiceService;
 import Group.Better.service.PostService;
 import Group.Better.service.StorageService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/account")
+@Slf4j
 public class NewController {
 
     private final PostService postService;
@@ -70,6 +72,7 @@ public class NewController {
 
         for (Choice choice : choices) {
             if (choice.getChoiceContent() != null && !choice.getChoiceContent().isEmpty()) {
+                log.info("postのID : " + post.getId());
                 choice.setPost(post);
                 choiceService.save(choice);
             }
