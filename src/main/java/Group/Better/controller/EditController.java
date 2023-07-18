@@ -89,14 +89,12 @@ public class EditController {
 
             MultipartFile choiceImage = choiceImages.get(i);
             if (choiceImage != null && !choiceImage.isEmpty()) {
-                // Delete existing image if present
                 if (existingChoices.get(i).getImageData() != null) {
                     Long oldImageId = existingChoices.get(i).getImageData().getId();
-                    existingChoices.get(i).setImageData(null); // Remove reference from choice to image
-                    choiceService.save(existingChoices.get(i)); // Save the choice entity
-                    storageService.deleteImage(oldImageId); // Now delete the image
+                    existingChoices.get(i).setImageData(null);
+                    choiceService.save(existingChoices.get(i));
+                    storageService.deleteImage(oldImageId);
                 }
-
 
                 Long imageDataId = storageService.uploadImage(choiceImage);
                 if (imageDataId != null) {

@@ -18,12 +18,15 @@ CREATE TABLE IF NOT EXISTS posts (
     user_id BIGINT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id),
     image_data_id BIGINT,
-    FOREIGN KEY (image_data_id) REFERENCES image_data (id)
+    FOREIGN KEY (image_data_id) REFERENCES image_data (id),
+    closed_vote BOOLEAN DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS choices (
     id SERIAL NOT NULL PRIMARY KEY,
     choice_content VARCHAR(256) NOT NULL,
+    image_data_id BIGINT,
+    FOREIGN KEY (image_data_id) REFERENCES image_data (id),
     vote_count BIGINT,
     post_id BIGINT NOT NULL,
     FOREIGN KEY (post_id) REFERENCES posts (id)
