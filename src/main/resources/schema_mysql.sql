@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS posts (
 CREATE TABLE IF NOT EXISTS choices (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     choice_content VARCHAR(256) NOT NULL,
+    image_data_id BIGINT UNSIGNED,
+    FOREIGN KEY (image_data_id) REFERENCES image_data (id),
     vote_count BIGINT UNSIGNED,
     post_id BIGINT UNSIGNED NOT NULL,
     FOREIGN KEY (post_id) REFERENCES posts (id)

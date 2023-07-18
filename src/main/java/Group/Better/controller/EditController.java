@@ -54,7 +54,8 @@ public class EditController {
 
     @PostMapping("/detail/{id}/update")
     public String postUpdate(@PathVariable Long id, @Validated PostForm postForm, BindingResult result, Model model,
-                             @RequestParam("image") MultipartFile file) throws IOException {
+                             @RequestParam("image") MultipartFile file,
+                             @RequestPart("choiceImage") List<MultipartFile> choiceImages) throws IOException {
 
         if (result.hasErrors()) {
             model.addAttribute("postForm", postForm);
@@ -84,6 +85,24 @@ public class EditController {
                 updatedChoices.remove(i);
                 i--;
                 minSize--;
+            }
+
+            MultipartFile choiceImage = choiceImages.get(i);
+            if (choiceImage != null && !choiceImage.isEmpty()) {
+                // Delete existing image if present
+                if (existingChoices.get(i).getImageData() != null) {
+                    Long oldImageId = existingChoices.get(i).getImageData().getId();
+                    existingChoices.get(i).setImageData(null); // Remove reference from choice to image
+                    choiceService.save(existingChoices.get(i)); // Save the choice entity
+                    storageService.deleteImage(oldImageId); // Now delete the image
+                }
+
+
+                Long imageDataId = storageService.uploadImage(choiceImage);
+                if (imageDataId != null) {
+                    ImageData imageData = storageRepository.findById(imageDataId).orElse(null);
+                    existingChoices.get(i).setImageData(imageData);
+                }
             }
         }
 

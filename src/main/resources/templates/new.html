@@ -32,24 +32,29 @@
         <div class="form-choice">
           <label for="choiceContent1">チョイス.1</label><br>
           <input type="text" id="choiceContent1" th:field="*{choices[0].choiceContent}" required>
+          <input type="file" id="choiceImage1" name="choiceImage">
           <span th:if="${#fields.hasErrors('choices[0].choiceContent')}" th:errors="*{choices[0].choiceContent}">Choice Error</span>
         </div>
         <div class="form-choice">
           <label for="choiceContent2">チョイス.2</label><br>
           <input type="text" id="choiceContent2" th:field="*{choices[1].choiceContent}" required>
+          <input type="file" id="choiceImage2" name="choiceImage">
           <span th:if="${#fields.hasErrors('choices[1].choiceContent')}" th:errors="*{choices[1].choiceContent}">Choice Error</span>
         </div>
         <div class="form-choice">
           <label for="choiceContent3">チョイス.3</label><br>
           <input type="text" id="choiceContent3" th:field="*{choices[2].choiceContent}">
+          <input type="file" id="choiceImage3" name="choiceImage">
         </div>
         <div class="form-choice">
           <label for="choiceContent4">チョイス.4</label><br>
           <input type="text" id="choiceContent4" th:field="*{choices[3].choiceContent}">
+          <input type="file" id="choiceImage4" name="choiceImage">
         </div>
         <div class="form-choice">
           <label for="choiceContent5">チョイス.5</label><br>
           <input type="text" id="choiceContent5" th:field="*{choices[4].choiceContent}">
+          <input type="file" id="choiceImage5" name="choiceImage">
         </div>
       </div>
       <div class="form-submit">

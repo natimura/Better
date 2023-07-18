@@ -11,7 +11,6 @@ import Group.Better.service.ChoiceService;
 import Group.Better.service.PostService;
 import Group.Better.service.StorageService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +26,6 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/account")
-@Slf4j
 public class NewController {
 
     private final PostService postService;
@@ -47,6 +45,7 @@ public class NewController {
     public String postCreate(@ModelAttribute("postForm")
                              @Validated PostForm postForm, BindingResult result,
                              @RequestParam("image") MultipartFile file,
+                             @RequestParam("choiceImage") MultipartFile[] choiceImages,
                              Model model, HttpServletRequest httpServletRequest) throws IOException{
 
         Post post = postForm.getPost();
@@ -67,20 +66,23 @@ public class NewController {
         }
 
         postService.save(post);
-        log.info("postのID : " + post.getId());
 
         List<Choice> choices = postForm.getChoices();
-        log.info("postのID : " + post.getId());
 
-        for (Choice choice : choices) {
+        for (int i = 0; i < choices.size(); i++) {
+            Choice choice = choices.get(i);
             if (choice.getChoiceContent() != null && !choice.getChoiceContent().isEmpty()) {
-                log.info("postのID : " + post.getId());
                 choice.setPost(post);
-                log.info("postのID : " + choice.getPost().getId());
+                if (i < choiceImages.length && !choiceImages[i].isEmpty()) {
+                    Long choiceImageDataId = storageService.uploadImage(choiceImages[i]);
+                    if (choiceImageDataId != null) {
+                        ImageData choiceImageData = storageRepository.findById(choiceImageDataId).orElse(null);
+                        choice.setImageData(choiceImageData);
+                    }
+                }
                 choiceService.save(choice);
             }
         }
-
         return "redirect:/";
     }
 }

@@ -31,10 +31,17 @@ public class DetailController {
         }
 
         List<Choice> choices = post.getChoices();
+
+        for (Choice choice : choices) {
+            if (choice.getImageData() != null) {
+                byte[] choiceImageData = storageService.downloadImage(choice.getImageData().getId());
+                String base64ChoiceImageData = Base64.getEncoder().encodeToString(choiceImageData);
+                choice.setBase64ChoiceImageData(base64ChoiceImageData);
+            }
+        }
+
         model.addAttribute("choices", choices);
-
         model.addAttribute("post", post);
-
 
         return "detail";
     }

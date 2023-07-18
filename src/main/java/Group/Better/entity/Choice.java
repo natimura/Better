@@ -19,9 +19,16 @@ public class Choice {
 
     private String choiceContent;
 
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "image_data_id")
+    private ImageData imageData;
+
     private int voteCount = 0;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    @Transient
+    private String base64ChoiceImageData;
 }
