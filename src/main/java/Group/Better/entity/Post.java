@@ -33,7 +33,7 @@ public class Post {
     @JoinColumn(name = "image_data_id")
     private ImageData imageData;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Choice> choices;
 
     private boolean closedVote = false;
