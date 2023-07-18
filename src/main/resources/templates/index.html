@@ -13,6 +13,7 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item" th:each="post:${postList}">
                 <a class="h3" th:text="${post.title}" th:href="@{/detail/{id}(id=${post.id})}"></a>
+                <span class="badge rounded-pill bg-secondary" th:if="${post.closedVote}">投票終了</span>
             </li>
         </ul>
     </div>

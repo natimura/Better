@@ -47,6 +47,7 @@ header {
     width:70%;
     border-bottom:1px solid gray;
     padding-bottom:3px;
+    padding-top:40px;
     font-weight:bold;
     display:flex;
     justify-content:space-between;
@@ -63,10 +64,11 @@ header {
 .detail-btns {
     display:flex;
     justify-content:center;
+    margin-bottom:100px;
 }
 
-.delete-btn {
-    margin-left:60px;
+.edit-btn {
+    margin:0 60px;
 }
 
 .form-button {
@@ -116,10 +118,14 @@ header {
 .detail-choices{
     margin-top:40px;
     display:flex;
-    justify-content: space-around;
+    justify-content:center;
     flex-wrap: wrap;
     text-align:center;
     margin-bottom:80px;
+}
+
+.detail-choice{
+    margin-right:60px;
 }
 
 .form-choices{
@@ -138,5 +144,11 @@ header {
 
 .form-content label{
     font-size:25px;
+}
+
+.closed-vote{
+    text-align:center;
+    margin:0 auto;
+    width:50%;
 }
 
