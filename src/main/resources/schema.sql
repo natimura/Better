@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS posts (
     FOREIGN KEY (user_id) REFERENCES users (id),
     image_data_id BIGINT,
     FOREIGN KEY (image_data_id) REFERENCES image_data (id),
-    closed_vote BOOLEAN DEFAULT 0
+    closed_vote BOOLEAN DEFAULT false
 );
 
 CREATE TABLE IF NOT EXISTS choices (
