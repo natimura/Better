@@ -34,6 +34,7 @@ public class Post {
     private ImageData imageData;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OrderBy("id")
     private List<Choice> choices;
 
     private boolean closedVote = false;

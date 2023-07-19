@@ -19,7 +19,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Post> postList = postService.getAll();
+        List<Post> postList = postService.getAllPosts();
         model.addAttribute("postList", postList);
         return "index";
     }
