@@ -67,85 +67,76 @@ public class EditController {
             return "edit";
         }
 
-        try {
-            Post post = postService.getById(id);
-            post.setTitle(postForm.getPost().getTitle());
-            post.setContent(postForm.getPost().getContent());
+        Post post = postService.getById(id);
+        post.setTitle(postForm.getPost().getTitle());
+        post.setContent(postForm.getPost().getContent());
 
-            List<Choice> updatedChoices = postForm.getChoices();
-            List<Choice> existingChoices = new ArrayList<>(post.getChoices());
-            List<Choice> choicesToDelete = new ArrayList<>();
+        List<Choice> updatedChoices = postForm.getChoices();
+        List<Choice> existingChoices = new ArrayList<>(post.getChoices());
+        List<Choice> choicesToDelete = new ArrayList<>();
 
-            boolean isChoiceEdited = false;
-            int minSize = Math.min(existingChoices.size(), updatedChoices.size());
+        boolean isChoiceEdited = false;
+        int minSize = Math.min(existingChoices.size(), updatedChoices.size());
 
-            for (int i = 0; i < minSize; i++) {
-                Choice updatedChoice = updatedChoices.get(i);
-                Choice existingChoice = existingChoices.get(i);
+        for (int i = 0; i < minSize; i++) {
+            Choice updatedChoice = updatedChoices.get(i);
+            Choice existingChoice = existingChoices.get(i);
 
-                if (updatedChoice.getChoiceContent().trim().isEmpty()) {
-                    choicesToDelete.add(existingChoice);
-                    existingChoices.remove(i);
-                    updatedChoices.remove(i);
-                    i--;
-                    minSize--;
-                    continue;
-                }
-
-                if (!existingChoice.getChoiceContent().equals(updatedChoice.getChoiceContent())) {
-                    isChoiceEdited = true;
-                    existingChoice.setChoiceContent(updatedChoice.getChoiceContent());
-                }
-
-                MultipartFile choiceImage = choiceImages.get(i);
-                if (choiceImage != null && !choiceImage.isEmpty()) {
-                    Long imageDataId = storageService.uploadImage(choiceImage);
-                    if (imageDataId != null) {
-                        ImageData imageData = storageRepository.findById(imageDataId).orElse(null);
-                        existingChoice.setImageData(imageData);
-                    }
-                }
+            if (updatedChoice.getChoiceContent().trim().isEmpty()) {
+                choicesToDelete.add(existingChoice);
+                existingChoices.remove(i);
+                updatedChoices.remove(i);
+                i--;
+                minSize--;
+                continue;
             }
 
-            if (updatedChoices.size() > existingChoices.size()) {
-                for (int i = minSize; i < updatedChoices.size(); i++) {
-                    Choice newChoice = updatedChoices.get(i);
-                    if (!newChoice.getChoiceContent().trim().isEmpty()) {
-                        newChoice.setPost(post);
-                        existingChoices.add(newChoice);
-                    }
-                }
+            if (!existingChoice.getChoiceContent().equals(updatedChoice.getChoiceContent())) {
                 isChoiceEdited = true;
+                existingChoice.setChoiceContent(updatedChoice.getChoiceContent());
             }
 
-            if (isChoiceEdited) {
-                for (Choice choice : existingChoices) {
-                    choice.setVoteCount(0);
+            MultipartFile choiceImage = choiceImages.get(i);
+            if (choiceImage != null && !choiceImage.isEmpty()) {
+                Long imageDataId = storageService.uploadImage(choiceImage);
+                if (imageDataId != null) {
+                    ImageData imageData = storageRepository.findById(imageDataId).orElse(null);
+                    existingChoice.setImageData(imageData);
                 }
             }
-
-            if (file != null && !file.isEmpty()) {
-                Long imagedata = storageService.uploadImage(file);
-                if (imagedata != null) {
-                    ImageData imageData = storageRepository.findById(imagedata).orElse(null);
-                    post.setImageData(imageData);
-                }
-            }
-
-            post.setChoices(existingChoices);
-            postService.save(post);
-
-            for (Choice choice : choicesToDelete) {
-                choiceService.delete(choice);
-            }
-
-        } catch (Exception e) {
-            System.out.println("An error occurred: " + e.getMessage());
-
-            model.addAttribute("errorMessage", "エラー：画像の合計サイズは20MB以下にして下さい");
-            return "edit";
         }
 
+        if (updatedChoices.size() > existingChoices.size()) {
+            for (int i = minSize; i < updatedChoices.size(); i++) {
+                Choice newChoice = updatedChoices.get(i);
+                if (!newChoice.getChoiceContent().trim().isEmpty()) {
+                    newChoice.setPost(post);
+                    existingChoices.add(newChoice);
+                }
+            }
+            isChoiceEdited = true;
+        }
+
+        if (isChoiceEdited) {
+            for (Choice choice : existingChoices) {
+                choice.setVoteCount(0);
+            }
+        }
+
+        if (file != null && !file.isEmpty()) {
+            Long imagedata = storageService.uploadImage(file);
+            if (imagedata != null) {
+                ImageData imageData = storageRepository.findById(imagedata).orElse(null);
+                post.setImageData(imageData);
+            }
+        }
+
+        post.setChoices(existingChoices);
+        postService.save(post);
+
+        for (Choice choice : choicesToDelete) {
+            choiceService.delete(choice);
+        }
         return "redirect:/detail/{id}";
     }
 }
