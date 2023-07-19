@@ -73,6 +73,9 @@ public class EditController {
 
         boolean isChoiceEdited = false;
         int minSize = Math.min(existingChoices.size(), updatedChoices.size());
+
+        List<Long> oldImageIdsToDelete = new ArrayList<>();
+
         for (int i = 0; i < minSize; i++) {
             if (!updatedChoices.get(i).getChoiceContent().trim().isEmpty() &&
                     !existingChoices.get(i).getChoiceContent().equals(updatedChoices.get(i).getChoiceContent())) {
@@ -91,9 +94,11 @@ public class EditController {
             if (choiceImage != null && !choiceImage.isEmpty()) {
                 if (existingChoices.get(i).getImageData() != null) {
                     Long oldImageId = existingChoices.get(i).getImageData().getId();
+
+                    oldImageIdsToDelete.add(oldImageId);
+
                     existingChoices.get(i).setImageData(null);
                     choiceService.save(existingChoices.get(i));
-                    storageService.deleteImage(oldImageId);
                 }
 
                 Long imageDataId = storageService.uploadImage(choiceImage);
@@ -139,6 +144,10 @@ public class EditController {
 
         for (Choice choice : choicesToDelete) {
             choiceService.delete(choice);
+        }
+        
+        for (Long imageId : oldImageIdsToDelete) {
+            storageService.deleteImage(imageId);
         }
 
         return "redirect:/detail/{id}";
