@@ -10,6 +10,11 @@
 
   <div class="main-form">
     <h1>新規投稿</h1>
+    <div th:if="${errorMessage}" class="alert alert-danger">
+      <p th:text="${errorMessage}"></p>
+    </div>
+    <p class="caution">※動作が重たくなりますので、画像を投稿される際はサイズの小さい画像をお選びください。<br>
+    画像の合計サイズが20MB以上だと投稿できません。</p>
     <form th:action="@{/account/create}" th:method="post" th:object="${postForm}" enctype="multipart/form-data" >
       <div class="form-posts">
         <div class="form-title">

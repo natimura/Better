@@ -51,6 +51,10 @@ header {
     text-align:center;
 }
 
+.caution {
+    color:red;
+}
+
 .form-title {
     width:50%;
     margin:0 auto;

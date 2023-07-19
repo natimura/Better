@@ -37,7 +37,7 @@ public class NewController {
     private StorageService storageService;
 
     @GetMapping("/new")
-    public String newPost(@ModelAttribute("postForm") PostForm postForm){
+    public String newPost(@ModelAttribute("postForm") PostForm postForm) {
         return "new";
     }
 
@@ -46,14 +46,14 @@ public class NewController {
                              @Validated PostForm postForm, BindingResult result,
                              @RequestParam("image") MultipartFile file,
                              @RequestParam("choiceImage") MultipartFile[] choiceImages,
-                             Model model, HttpServletRequest httpServletRequest) throws IOException{
-
-        Post post = postForm.getPost();
+                             Model model, HttpServletRequest httpServletRequest) throws IOException {
 
         if (result.hasErrors()) {
             model.addAttribute("postForm", postForm);
             return "new";
         }
+
+        Post post = postForm.getPost();
 
         String username = httpServletRequest.getRemoteUser();
         User user = userRepository.findByUsername(username);
