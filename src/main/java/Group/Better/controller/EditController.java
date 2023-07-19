@@ -3,16 +3,17 @@ package Group.Better.controller;
 import Group.Better.entity.Choice;
 import Group.Better.entity.ImageData;
 import Group.Better.entity.Post;
-import Group.Better.entity.User;
 import Group.Better.form.PostForm;
 import Group.Better.repository.StorageRepository;
 import Group.Better.service.ChoiceService;
 import Group.Better.service.PostService;
 import Group.Better.service.StorageService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -26,9 +27,12 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/account")
+@Transactional
 public class EditController {
 
+    @Autowired
     private final PostService postService;
+
     private final StorageService storageService;
     private final StorageRepository storageRepository;
     private final ChoiceService choiceService;
@@ -67,49 +71,39 @@ public class EditController {
         post.setContent(postForm.getPost().getContent());
 
         List<Choice> updatedChoices = postForm.getChoices();
-        List<Choice> existingChoices = post.getChoices();
-
-        List<Choice> choicesToDelete = new ArrayList<>();
+        List<Choice> existingChoices = new ArrayList<>(post.getChoices());
 
         boolean isChoiceEdited = false;
         int minSize = Math.min(existingChoices.size(), updatedChoices.size());
 
-        List<Long> oldImageIdsToDelete = new ArrayList<>();
-
         for (int i = 0; i < minSize; i++) {
-            if (!updatedChoices.get(i).getChoiceContent().trim().isEmpty() &&
-                    !existingChoices.get(i).getChoiceContent().equals(updatedChoices.get(i).getChoiceContent())) {
+            Choice updatedChoice = updatedChoices.get(i);
+            Choice existingChoice = existingChoices.get(i);
+
+            if (!updatedChoice.getChoiceContent().trim().isEmpty() &&
+                    !existingChoice.getChoiceContent().equals(updatedChoice.getChoiceContent())) {
                 isChoiceEdited = true;
-                existingChoices.get(i).setChoiceContent(updatedChoices.get(i).getChoiceContent());
-            }
-            if (updatedChoices.get(i).getChoiceContent().trim().isEmpty()) {
-                choicesToDelete.add(existingChoices.get(i));
-                existingChoices.remove(i);
-                updatedChoices.remove(i);
-                i--;
-                minSize--;
+                existingChoice.setChoiceContent(updatedChoice.getChoiceContent());
             }
 
             MultipartFile choiceImage = choiceImages.get(i);
             if (choiceImage != null && !choiceImage.isEmpty()) {
-                if (existingChoices.get(i).getImageData() != null) {
-                    Long oldImageId = existingChoices.get(i).getImageData().getId();
-
-                    oldImageIdsToDelete.add(oldImageId);
-
-                    existingChoices.get(i).setImageData(null);
-                    choiceService.save(existingChoices.get(i));
-                }
-
                 Long imageDataId = storageService.uploadImage(choiceImage);
                 if (imageDataId != null) {
                     ImageData imageData = storageRepository.findById(imageDataId).orElse(null);
-                    existingChoices.get(i).setImageData(imageData);
+                    existingChoice.setImageData(imageData);
                 }
             }
         }
 
         if (updatedChoices.size() > existingChoices.size()) {
+            for (int i = minSize; i < updatedChoices.size(); i++) {
+                Choice newChoice = updatedChoices.get(i);
+                if (!newChoice.getChoiceContent().trim().isEmpty()) {
+                    newChoice.setPost(post);
+                    existingChoices.add(newChoice);
+                }
+            }
             isChoiceEdited = true;
         }
 
@@ -119,36 +113,16 @@ public class EditController {
             }
         }
 
-        for (int i = minSize; i < updatedChoices.size(); i++) {
-            Choice newChoice = updatedChoices.get(i);
-            if (!newChoice.getChoiceContent().trim().isEmpty()) {
-                newChoice.setPost(post);
-                choiceService.save(newChoice);
-            }
-        }
-
-        User user = post.getUser();
-        post.setUser(user);
-
         if (file != null && !file.isEmpty()) {
             Long imagedata = storageService.uploadImage(file);
             if (imagedata != null) {
                 ImageData imageData = storageRepository.findById(imagedata).orElse(null);
                 post.setImageData(imageData);
             }
-        } else {
-            post.setImageData((post.getImageData()));
         }
 
+        post.setChoices(existingChoices);
         postService.save(post);
-
-        for (Choice choice : choicesToDelete) {
-            choiceService.delete(choice);
-        }
-        
-        for (Long imageId : oldImageIdsToDelete) {
-            storageService.deleteImage(imageId);
-        }
 
         return "redirect:/detail/{id}";
     }
