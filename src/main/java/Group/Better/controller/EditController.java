@@ -72,6 +72,7 @@ public class EditController {
 
         List<Choice> updatedChoices = postForm.getChoices();
         List<Choice> existingChoices = new ArrayList<>(post.getChoices());
+        List<Choice> choicesToDelete = new ArrayList<>();
 
         boolean isChoiceEdited = false;
         int minSize = Math.min(existingChoices.size(), updatedChoices.size());
@@ -80,8 +81,16 @@ public class EditController {
             Choice updatedChoice = updatedChoices.get(i);
             Choice existingChoice = existingChoices.get(i);
 
-            if (!updatedChoice.getChoiceContent().trim().isEmpty() &&
-                    !existingChoice.getChoiceContent().equals(updatedChoice.getChoiceContent())) {
+            if (updatedChoice.getChoiceContent().trim().isEmpty()) {
+                choicesToDelete.add(existingChoice);
+                existingChoices.remove(i);
+                updatedChoices.remove(i);
+                i--;
+                minSize--;
+                continue;
+            }
+
+            if (!existingChoice.getChoiceContent().equals(updatedChoice.getChoiceContent())) {
                 isChoiceEdited = true;
                 existingChoice.setChoiceContent(updatedChoice.getChoiceContent());
             }
@@ -123,6 +132,10 @@ public class EditController {
 
         post.setChoices(existingChoices);
         postService.save(post);
+
+        for (Choice choice : choicesToDelete) {
+            choiceService.delete(choice);
+        }
 
         return "redirect:/detail/{id}";
     }
