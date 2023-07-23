@@ -18,22 +18,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        return userRepository.findByUsernameLogin(username)
-                .map(
-                        user -> new CustomUserDetails(
-                                user.getUsername(),
-                                user.getPassword(),
-                                Collections.emptyList(),
-                                user.getId()
-
-                        )
-                )
-                .orElseThrow(
-                        () -> new UsernameNotFoundException(
-                                "Given username is not found. (username = '" + username + "')"
-                        )
-                );
+        return userRepository.findByUsername(username)
+                .map(user -> new CustomUserDetails(
+                        user.getUsername(),
+                        user.getPassword(),
+                        Collections.emptyList(),
+                        user.getId()
+                ))
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        "Given username is not found. (username = '" + username + "')"
+                ));
     }
-
 }

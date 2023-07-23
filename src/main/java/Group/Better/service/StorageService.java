@@ -16,6 +16,10 @@ public class StorageService {
     @Autowired
     private StorageRepository storageRepository;
 
+    public Optional<ImageData> findById(Long id) {
+        return storageRepository.findById(id);
+    }
+
     public Long uploadImage(MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
             ImageData imageData = storageRepository.save(ImageData.builder()

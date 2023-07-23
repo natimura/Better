@@ -4,12 +4,10 @@ import Group.Better.entity.Choice;
 import Group.Better.entity.ImageData;
 import Group.Better.entity.Post;
 import Group.Better.form.PostForm;
-import Group.Better.repository.StorageRepository;
 import Group.Better.service.ChoiceService;
 import Group.Better.service.PostService;
 import Group.Better.service.StorageService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -30,11 +28,8 @@ import java.util.List;
 @Transactional
 public class EditController {
 
-    @Autowired
     private final PostService postService;
-
     private final StorageService storageService;
-    private final StorageRepository storageRepository;
     private final ChoiceService choiceService;
 
     @GetMapping("/detail/{id}/edit")
@@ -100,7 +95,7 @@ public class EditController {
             if (choiceImage != null && !choiceImage.isEmpty()) {
                 Long imageDataId = storageService.uploadImage(choiceImage);
                 if (imageDataId != null) {
-                    ImageData imageData = storageRepository.findById(imageDataId).orElse(null);
+                    ImageData imageData = storageService.findById(imageDataId).orElse(null);
                     existingChoice.setImageData(imageData);
                 }
             }
@@ -126,7 +121,7 @@ public class EditController {
         if (file != null && !file.isEmpty()) {
             Long imagedata = storageService.uploadImage(file);
             if (imagedata != null) {
-                ImageData imageData = storageRepository.findById(imagedata).orElse(null);
+                ImageData imageData = storageService.findById(imagedata).orElse(null);
                 post.setImageData(imageData);
             }
         }

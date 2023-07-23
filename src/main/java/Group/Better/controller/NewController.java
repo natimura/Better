@@ -5,13 +5,11 @@ import Group.Better.entity.ImageData;
 import Group.Better.entity.Post;
 import Group.Better.entity.User;
 import Group.Better.form.PostForm;
-import Group.Better.repository.StorageRepository;
-import Group.Better.repository.UserRepository;
 import Group.Better.service.ChoiceService;
 import Group.Better.service.PostService;
 import Group.Better.service.StorageService;
+import Group.Better.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,11 +27,8 @@ import java.util.List;
 public class NewController {
 
     private final PostService postService;
-    private final UserRepository userRepository;
-    private final StorageRepository storageRepository;
+    private final UserService userService;
     private final ChoiceService choiceService;
-
-    @Autowired
     private StorageService storageService;
 
     @GetMapping("/new")
@@ -56,12 +51,12 @@ public class NewController {
         Post post = postForm.getPost();
 
         String username = httpServletRequest.getRemoteUser();
-        User user = userRepository.findByUsername(username);
+        User user = userService.findByUsername(username).orElse(null);
         post.setUser(user);
 
         Long imagedata = storageService.uploadImage(file);
         if (imagedata != null) {
-            ImageData imageData = storageRepository.findById(imagedata).orElse(null);
+            ImageData imageData = storageService.findById(imagedata).orElse(null);
             post.setImageData(imageData);
         }
 
@@ -76,7 +71,7 @@ public class NewController {
                 if (i < choiceImages.length && !choiceImages[i].isEmpty()) {
                     Long choiceImageDataId = storageService.uploadImage(choiceImages[i]);
                     if (choiceImageDataId != null) {
-                        ImageData choiceImageData = storageRepository.findById(choiceImageDataId).orElse(null);
+                        ImageData choiceImageData = storageService.findById(choiceImageDataId).orElse(null);
                         choice.setImageData(choiceImageData);
                     }
                 }
