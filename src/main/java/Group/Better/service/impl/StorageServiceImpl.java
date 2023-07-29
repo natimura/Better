@@ -1,4 +1,4 @@
-package Group.Better.impl;
+package Group.Better.service.impl;
 
 import Group.Better.entity.ImageData;
 import Group.Better.repository.StorageRepository;

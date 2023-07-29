@@ -1,4 +1,4 @@
-package Group.Better.impl;
+package Group.Better.service.impl;
 
 import Group.Better.entity.Choice;
 import Group.Better.repository.ChoiceRepository;
